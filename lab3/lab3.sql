@@ -6,6 +6,7 @@ INSERT INTO book (id_book, title) VALUES (8, 'The Shining');
 --1.3 С чтением значения из другой таблицы
 INSERT INTO book_in_store(id_book) SELECT id_book FROM book;
 
+
 --2. DELETE
 -- 2.1 Всех записей
 DELETE FROM store;
@@ -13,6 +14,7 @@ DELETE FROM store;
 DELETE FROM store WHERE id_store > 6;
 -- 2.3 Очистить таблицу
 TRUNCATE TABLE book_in_store;
+
 
 --3. UPDATE
 -- 3.1 Всех записей
