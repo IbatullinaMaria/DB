@@ -1,4 +1,3 @@
-
 --1. INSERT
 -- 1.1 Без указания списка полей
 INSERT INTO store VALUES (1, 'BestStore', 'Yoshkar-Ola pl Lenina 3', 200, 'U.A.Ivanov');
