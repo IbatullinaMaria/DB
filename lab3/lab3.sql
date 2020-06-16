@@ -1,61 +1,61 @@
---1. INSERT
--- 1.1 Без указания списка полей
+п»ї--1. INSERT
+-- 1.1 Р‘РµР· СѓРєР°Р·Р°РЅРёСЏ СЃРїРёСЃРєР° РїРѕР»РµР№
 INSERT INTO store VALUES (1, 'BestStore', 'Yoshkar-Ola pl Lenina 3', 200, 'U.A.Ivanov');
--- 1.2 С указанием списка полей
+-- 1.2 РЎ СѓРєР°Р·Р°РЅРёРµРј СЃРїРёСЃРєР° РїРѕР»РµР№
 INSERT INTO book (id_book, title) VALUES (8, 'The Shining');
---1.3 С чтением значения из другой таблицы
+--1.3 РЎ С‡С‚РµРЅРёРµРј Р·РЅР°С‡РµРЅРёСЏ РёР· РґСЂСѓРіРѕР№ С‚Р°Р±Р»РёС†С‹
 INSERT INTO book_in_store(id_book) SELECT id_book FROM book;
 
 
 --2. DELETE
--- 2.1 Всех записей
+-- 2.1 Р’СЃРµС… Р·Р°РїРёСЃРµР№
 DELETE FROM store;
--- 2.2 По условию
+-- 2.2 РџРѕ СѓСЃР»РѕРІРёСЋ
 DELETE FROM store WHERE id_store > 6;
--- 2.3 Очистить таблицу
+-- 2.3 РћС‡РёСЃС‚РёС‚СЊ С‚Р°Р±Р»РёС†Сѓ
 TRUNCATE TABLE book_in_store;
 
 
 --3. UPDATE
--- 3.1 Всех записей
+-- 3.1 Р’СЃРµС… Р·Р°РїРёСЃРµР№
 UPDATE book
 SET title = 'The Green Mile', isbn = '0987654321098', price = '200';
--- 3.2 По условию обновляя один атрибут
+-- 3.2 РџРѕ СѓСЃР»РѕРІРёСЋ РѕР±РЅРѕРІР»СЏСЏ РѕРґРёРЅ Р°С‚СЂРёР±СѓС‚
 UPDATE book
 SET isbn = '6789012345678' WHERE title = 'The Shining';
--- 3.3 По условию обновляя несколько атрибутов
+-- 3.3 РџРѕ СѓСЃР»РѕРІРёСЋ РѕР±РЅРѕРІР»СЏСЏ РЅРµСЃРєРѕР»СЊРєРѕ Р°С‚СЂРёР±СѓС‚РѕРІ
 UPDATE store
 SET name = 'TopBestStore', number_of_books = '210' WHERE adress = 'Yoshkar-Ola pl Lenina 3';
 
 
 --4. SELECT
--- 4.1 С определенным набором извлекаемых атрибутов
+-- 4.1 РЎ РѕРїСЂРµРґРµР»РµРЅРЅС‹Рј РЅР°Р±РѕСЂРѕРј РёР·РІР»РµРєР°РµРјС‹С… Р°С‚СЂРёР±СѓС‚РѕРІ
 SELECT title, isbn FROM book;
--- 4.2 Со всеми атрибутами
+-- 4.2 РЎРѕ РІСЃРµРјРё Р°С‚СЂРёР±СѓС‚Р°РјРё
 SELECT * FROM book;
--- 4.3 С условием по атрибуту
+-- 4.3 РЎ СѓСЃР»РѕРІРёРµРј РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ
 SELECT * FROM book WHERE title = 'The Green Mile';
 
 
 -- 5. SELECT ORDER BY + TOP (LIMIT)
--- 5.1 С сортировкой по возрастанию ASC + ограничение вывода количества записей
+-- 5.1 РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ ASC + РѕРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹РІРѕРґР° РєРѕР»РёС‡РµСЃС‚РІР° Р·Р°РїРёСЃРµР№
 SELECT * FROM book ORDER BY title ASC;
--- 5.2 С сортировкой по убыванию DESC
+-- 5.2 РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ СѓР±С‹РІР°РЅРёСЋ DESC
 SELECT * FROM book ORDER BY price DESC;
--- 5.3 С сортировкой по двум атрибутам + ограничение вывода количества записей
+-- 5.3 РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РґРІСѓРј Р°С‚СЂРёР±СѓС‚Р°Рј + РѕРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹РІРѕРґР° РєРѕР»РёС‡РµСЃС‚РІР° Р·Р°РїРёСЃРµР№
 SELECT TOP 10 * FROM book ORDER BY title, price DESC;
--- 5.4  С сортировкой по первому атрибуту, из списка извлекаемых
+-- 5.4  РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РїРµСЂРІРѕРјСѓ Р°С‚СЂРёР±СѓС‚Сѓ, РёР· СЃРїРёСЃРєР° РёР·РІР»РµРєР°РµРјС‹С…
 SELECT title, price FROM book ORDER BY 1;
 
 
---6. Работа с датами. Необходимо, чтобы одна из таблиц содержала атрибут с типом DATETIME.
--- 6.1 WHERE по дате
+--6. Р Р°Р±РѕС‚Р° СЃ РґР°С‚Р°РјРё. РќРµРѕР±С…РѕРґРёРјРѕ, С‡С‚РѕР±С‹ РѕРґРЅР° РёР· С‚Р°Р±Р»РёС† СЃРѕРґРµСЂР¶Р°Р»Р° Р°С‚СЂРёР±СѓС‚ СЃ С‚РёРїРѕРј DATETIME.
+-- 6.1 WHERE РїРѕ РґР°С‚Рµ
 SELECT title FROM book WHERE year_of_writing = '01.01.1977';
--- 6.2 Извлечь из таблицы не всю дату, а только год
+-- 6.2 РР·РІР»РµС‡СЊ РёР· С‚Р°Р±Р»РёС†С‹ РЅРµ РІСЃСЋ РґР°С‚Сѓ, Р° С‚РѕР»СЊРєРѕ РіРѕРґ
 SELECT YEAR(year_of_writing) from book;
 
 
---7. SELECT GROUP BY с функциями агрегации
+--7. SELECT GROUP BY СЃ С„СѓРЅРєС†РёСЏРјРё Р°РіСЂРµРіР°С†РёРё
 -- 7.1 MIN
 SELECT title, MIN(price) AS min_price FROM book GROUP BY title;
 -- 7.2 MAX
@@ -79,23 +79,23 @@ HAVING MIN(DATEPART(year, year_of_writing)) < 1980;
 
 
 --9. SELECT JOIN
--- 9.1 LEFT JOIN двух таблиц и WHERE по одному из атрибутов
+-- 9.1 LEFT JOIN РґРІСѓС… С‚Р°Р±Р»РёС† Рё WHERE РїРѕ РѕРґРЅРѕРјСѓ РёР· Р°С‚СЂРёР±СѓС‚РѕРІ
 SELECT * FROM "book" LEFT JOIN publisher on "book".id_publisher = publisher.id_publisher WHERE publisher.id_publisher > 156;
 
--- 9.2 RIGHT JOIN. Получить такую же выборку, как и в 9.1
+-- 9.2 RIGHT JOIN. РџРѕР»СѓС‡РёС‚СЊ С‚Р°РєСѓСЋ Р¶Рµ РІС‹Р±РѕСЂРєСѓ, РєР°Рє Рё РІ 9.1
 SELECT * FROM "book" RIGHT JOIN publisher on "book".id_publisher = publisher.id_publisher WHERE publisher.id_publisher > 156 ORDER BY title ASC;
 
--- 9.3 LEFT JOIN трех таблиц + WHERE по атрибуту из каждой таблицы
+-- 9.3 LEFT JOIN С‚СЂРµС… С‚Р°Р±Р»РёС† + WHERE РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ РёР· РєР°Р¶РґРѕР№ С‚Р°Р±Р»РёС†С‹
 SELECT * FROM book LEFT JOIN publisher on "book".id_publisher = publisher.id_publisher
 LEFT JOIN buyer on "book".id_book = buyer.id_book
 WHERE buyer.name = 'Afonasii' and "publisher".phone = '89276736461' and book.id_book = 128;
 
--- 9.4 FULL OUTER JOIN двух таблиц
+-- 9.4 FULL OUTER JOIN РґРІСѓС… С‚Р°Р±Р»РёС†
 SELECT * FROM "book" FULL OUTER JOIN publisher on "book".id_publisher = publisher.id_publisher;
 
 
---10. Подзапросы
--- 10.1 Написать запрос с WHERE IN (подзапрос)
+--10. РџРѕРґР·Р°РїСЂРѕСЃС‹
+-- 10.1 РќР°РїРёСЃР°С‚СЊ Р·Р°РїСЂРѕСЃ СЃ WHERE IN (РїРѕРґР·Р°РїСЂРѕСЃ)
 SELECT title, isbn FROM "book" WHERE price IN ('100', '400');
--- 10.2 Написать запрос SELECT atr1, atr2, (подзапрос) FROM ...
+-- 10.2 РќР°РїРёСЃР°С‚СЊ Р·Р°РїСЂРѕСЃ SELECT atr1, atr2, (РїРѕРґР·Р°РїСЂРѕСЃ) FROM ...
 SELECT id_book, title FROM "book" WHERE price > (SELECT MIN(price) FROM "book");
