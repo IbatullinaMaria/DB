@@ -1,11 +1,12 @@
-﻿--1. INSERT
+﻿use lw3;
+
+--1. INSERT
 -- 1.1 Без указания списка полей
 INSERT INTO store VALUES (1, 'BestStore', 'Yoshkar-Ola pl Lenina 3', 200, 'U.A.Ivanov');
 -- 1.2 С указанием списка полей
-INSERT INTO book (id_book, title) VALUES (8, 'The Shining');
+INSERT INTO book (id_book, title) VALUES (21, 'The Shining');
 --1.3 С чтением значения из другой таблицы
 INSERT INTO book_in_store(id_book) SELECT id_book FROM book;
-
 
 --2. DELETE
 -- 2.1 Всех записей
@@ -14,7 +15,6 @@ DELETE FROM store;
 DELETE FROM store WHERE id_store > 6;
 -- 2.3 Очистить таблицу
 TRUNCATE TABLE book_in_store;
-
 
 --3. UPDATE
 -- 3.1 Всех записей
@@ -70,32 +70,32 @@ SELECT title, COUNT(price) AS count_price FROM book GROUP BY title;
 
 -- SELECT GROUP BY + HAVING
 -- 8.1
-SELECT title, price FROM book GROUP BY title, price HAVING sum(price) > 500;
+SELECT id_author from book_author GROUP BY id_author HAVING COUNT(*) >= 5;
 -- 8.2
-SELECT year_of_writing FROM book GROUP BY year_of_writing HAVING YEAR(year_of_writing)  > 1991;
+SELECT AVG(price) AS avg_price_publisher, id_publisher FROM book GROUP BY book.id_publisher HAVING AVG(price) > 300;
 -- 8.3
 SELECT isbn FROM book GROUP BY isbn
-HAVING MIN(DATEPART(year, year_of_writing)) < 1980;
+SELECT COUNT(id_book) AS count_id_book, id_publisher FROM book GROUP BY book.id_publisher HAVING id_publisher = 1;
 
 
 --9. SELECT JOIN
 -- 9.1 LEFT JOIN двух таблиц и WHERE по одному из атрибутов
-SELECT * FROM "book" LEFT JOIN publisher on "book".id_publisher = publisher.id_publisher WHERE publisher.id_publisher > 156;
+SELECT * FROM book LEFT JOIN publisher on book.id_publisher = publisher.id_publisher WHERE publisher.id_publisher > 156;
 
 -- 9.2 RIGHT JOIN. Получить такую же выборку, как и в 9.1
-SELECT * FROM "book" RIGHT JOIN publisher on "book".id_publisher = publisher.id_publisher WHERE publisher.id_publisher > 156 ORDER BY title ASC;
+SELECT * FROM publisher RIGHT JOIN book on book.id_publisher = publisher.id_publisher WHERE publisher.id_publisher > 156 ORDER BY title ASC;
 
 -- 9.3 LEFT JOIN трех таблиц + WHERE по атрибуту из каждой таблицы
-SELECT * FROM book LEFT JOIN publisher on "book".id_publisher = publisher.id_publisher
-LEFT JOIN buyer on "book".id_book = buyer.id_book
+SELECT * FROM book LEFT JOIN publisher on book.id_publisher = publisher.id_publisher
+LEFT JOIN buyer on book.id_book = buyer.id_book
 WHERE buyer.name = 'Afonasii' and "publisher".phone = '89276736461' and book.id_book = 128;
 
 -- 9.4 FULL OUTER JOIN двух таблиц
-SELECT * FROM "book" FULL OUTER JOIN publisher on "book".id_publisher = publisher.id_publisher;
+SELECT * FROM book FULL OUTER JOIN publisher on "book".id_publisher = publisher.id_publisher;
 
 
 --10. Подзапросы
 -- 10.1 Написать запрос с WHERE IN (подзапрос)
-SELECT title, isbn FROM "book" WHERE price IN ('100', '400');
+SELECT * FROM author WHERE id_author IN (SELECT id_author from book_author GROUP BY id_author HAVING COUNT(*) <= 3);
 -- 10.2 Написать запрос SELECT atr1, atr2, (подзапрос) FROM ...
-SELECT id_book, title FROM "book" WHERE price > (SELECT MIN(price) FROM "book");
+SELECT title, (SELECT MIN(price) FROM book) FROM book;
