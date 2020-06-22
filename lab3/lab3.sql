@@ -72,10 +72,9 @@ SELECT title, COUNT(price) AS count_price FROM book GROUP BY title;
 -- 8.1
 SELECT id_author from book_author GROUP BY id_author HAVING COUNT(*) >= 5;
 -- 8.2
-SELECT AVG(price) AS avg_price_publisher, id_publisher FROM book GROUP BY book.id_publisher HAVING AVG(price) > 300;
+SELECT AVG(price) AS avg_price_publisher, id_publisher FROM book GROUP BY book.id_publisher HAVING AVG(price) < 300;
 -- 8.3
-SELECT isbn FROM book GROUP BY isbn
-SELECT COUNT(id_book) AS count_id_book, id_publisher FROM book GROUP BY book.id_publisher HAVING id_publisher = 1;
+SELECT COUNT(id_book) AS count_id_book, id_publisher FROM book GROUP BY book.id_publisher HAVING id_publisher > 1;
 
 
 --9. SELECT JOIN
@@ -88,7 +87,7 @@ SELECT * FROM publisher RIGHT JOIN book on book.id_publisher = publisher.id_publ
 -- 9.3 LEFT JOIN трех таблиц + WHERE по атрибуту из каждой таблицы
 SELECT * FROM book LEFT JOIN publisher on book.id_publisher = publisher.id_publisher
 LEFT JOIN buyer on book.id_book = buyer.id_book
-WHERE buyer.name = 'Afonasii' and "publisher".phone = '89276736461' and book.id_book = 128;
+WHERE buyer.name = 'Afonasii' and publisher.phone = '89276736461' and book.id_book = 128;
 
 -- 9.4 FULL OUTER JOIN двух таблиц
 SELECT * FROM book FULL OUTER JOIN publisher on "book".id_publisher = publisher.id_publisher;
