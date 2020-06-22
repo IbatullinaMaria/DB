@@ -39,13 +39,13 @@ SELECT * FROM book WHERE title = 'The Green Mile';
 
 -- 5. SELECT ORDER BY + TOP (LIMIT)
 -- 5.1 С сортировкой по возрастанию ASC + ограничение вывода количества записей
-SELECT * FROM book ORDER BY title ASC;
+SELECT TOP 10 * FROM book ORDER BY title ASC;
 -- 5.2 С сортировкой по убыванию DESC
-SELECT * FROM book ORDER BY price DESC;
+SELECT TOP 10 * FROM book ORDER BY price DESC;
 -- 5.3 С сортировкой по двум атрибутам + ограничение вывода количества записей
 SELECT TOP 10 * FROM book ORDER BY title, price DESC;
 -- 5.4  С сортировкой по первому атрибуту, из списка извлекаемых
-SELECT title, price FROM book ORDER BY 1;
+SELECT TOP 10 title, price FROM book ORDER BY 1;
 
 
 --6. Работа с датами. Необходимо, чтобы одна из таблиц содержала атрибут с типом DATETIME.
@@ -90,7 +90,7 @@ LEFT JOIN buyer on book.id_book = buyer.id_book
 WHERE buyer.name = 'Afonasii' and publisher.phone = '89276736461' and book.id_book = 128;
 
 -- 9.4 FULL OUTER JOIN двух таблиц
-SELECT * FROM book FULL OUTER JOIN publisher on "book".id_publisher = publisher.id_publisher;
+SELECT * FROM book FULL OUTER JOIN publisher on book.id_publisher = publisher.id_publisher;
 
 
 --10. Подзапросы
