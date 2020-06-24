@@ -74,7 +74,7 @@ SELECT id_author from book_author GROUP BY id_author HAVING COUNT(*) >= 5;
 -- 8.2
 SELECT AVG(price) AS avg_price_publisher, id_publisher FROM book GROUP BY book.id_publisher HAVING AVG(price) < 300;
 -- 8.3
-SELECT COUNT(id_book) AS count_id_book, id_publisher FROM book GROUP BY book.id_publisher HAVING id_publisher > 1;
+SELECT COUNT(id_book) AS count_id_book, id_publisher FROM book GROUP BY book.id_publisher HAVING id_publisher = 1;
 
 
 --9. SELECT JOIN
